@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Tetris - 80年代レトロテトリス</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-black text-green-400 font-mono overflow-hidden">
+    <div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-900 via-blue-900 to-black">
+        <!-- ゲームタイトル -->
+        <div class="text-center mb-8">
+            <h1 class="text-6xl font-bold text-cyan-400 retro-text mb-4 animate-pulse">TETRIS</h1>
+            <p class="text-xl text-green-300 retro-glow">80年代レトロスタイル</p>
+        </div>
+
+        <!-- ゲームコンテナ -->
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <!-- ゲームボード -->
+            <div class="relative">
+                <div class="retro-border p-4">
+                    <canvas id="gameCanvas" width="320" height="640" class="bg-black border-2 border-cyan-400 retro-glow-border"></canvas>
+                </div>
+                
+                <!-- ゲームオーバー画面 -->
+                <div id="gameOverScreen" class="absolute inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center hidden">
+                    <div class="text-center retro-border p-8">
+                        <h2 class="text-4xl font-bold text-red-400 mb-4 retro-text">GAME OVER</h2>
+                        <p class="text-xl text-cyan-400 mb-6">スコア: <span id="finalScore">0</span></p>
+                        <button id="restartBtn" class="retro-button px-6 py-3 text-xl font-bold">RESTART</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- サイドパネル -->
+            <div class="flex flex-col gap-6">
+                <!-- スコア表示 -->
+                <div class="retro-border p-4 min-w-[200px]">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2 retro-text">SCORE</h3>
+                    <p id="score" class="text-3xl font-mono text-green-400 retro-glow">0</p>
+                </div>
+
+                <!-- レベル表示 -->
+                <div class="retro-border p-4">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2 retro-text">LEVEL</h3>
+                    <p id="level" class="text-3xl font-mono text-green-400 retro-glow">1</p>
+                </div>
+
+                <!-- ライン表示 -->
+                <div class="retro-border p-4">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2 retro-text">LINES</h3>
+                    <p id="lines" class="text-3xl font-mono text-green-400 retro-glow">0</p>
+                </div>
+
+                <!-- 次のテトロミノ -->
+                <div class="retro-border p-4">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2 retro-text">NEXT</h3>
+                    <canvas id="nextCanvas" width="80" height="80" class="bg-black border border-cyan-400"></canvas>
+                </div>
+
+                <!-- コントロール説明 -->
+                <div class="retro-border p-4">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2 retro-text">CONTROLS</h3>
+                    <div class="text-sm text-green-300 space-y-1">
+                        <p>← → : 移動</p>
+                        <p>↓ : 落下</p>
+                        <p>↑ : 回転</p>
+                        <p>SPACE : 一時停止</p>
+                        <p>R : リスタート</p>
+                    </div>
+                </div>
+
+                <!-- 音楽コントロール -->
+                <div class="retro-border p-4">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2 retro-text">MUSIC</h3>
+                    <button id="musicToggle" class="retro-button px-4 py-2 text-sm">ON</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 一時停止画面 -->
+        <div id="pauseScreen" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+            <div class="text-center retro-border p-8">
+                <h2 class="text-4xl font-bold text-yellow-400 mb-4 retro-text animate-pulse">PAUSED</h2>
+                <p class="text-xl text-cyan-400">SPACEキーでゲーム再開</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BGM用オーディオ -->
+    <audio id="bgm" loop>
+        <!-- コロベイニキのメロディは JavaScript で Web Audio API を使用して生成 -->
+    </audio>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
