@@ -1,0 +1,206 @@
+/* 80年代レトロスタイルCSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+body {
+    font-family: 'Orbitron', 'Courier New', monospace;
+    background: linear-gradient(45deg, #000428 0%, #004e92 100%);
+}
+
+/* レトロテキストエフェクト */
+.retro-text {
+    text-shadow: 
+        0 0 5px currentColor,
+        0 0 10px currentColor,
+        0 0 15px currentColor,
+        0 0 20px currentColor;
+    animation: retro-flicker 2s infinite alternate;
+}
+
+@keyframes retro-flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 
+            0 0 5px currentColor,
+            0 0 10px currentColor,
+            0 0 15px currentColor,
+            0 0 20px currentColor;
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+    }
+}
+
+/* レトログロー効果 */
+.retro-glow {
+    text-shadow: 
+        0 0 5px currentColor,
+        0 0 10px currentColor;
+}
+
+.retro-glow-border {
+    box-shadow: 
+        0 0 10px #00ffff,
+        inset 0 0 10px rgba(0, 255, 255, 0.1);
+    animation: border-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes border-glow {
+    from {
+        box-shadow: 
+            0 0 10px #00ffff,
+            inset 0 0 10px rgba(0, 255, 255, 0.1);
+    }
+    to {
+        box-shadow: 
+            0 0 20px #00ffff,
+            0 0 30px #00ffff,
+            inset 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+}
+
+/* レトロボーダー */
+.retro-border {
+    border: 2px solid #00ffff;
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.05));
+    position: relative;
+}
+
+.retro-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0.3;
+    animation: rainbow-border 3s linear infinite;
+}
+
+@keyframes rainbow-border {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* レトロボタン */
+.retro-button {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    color: #000;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.retro-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.retro-button:hover::before {
+    left: 100%;
+}
+
+.retro-button:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 0 20px #ff00ff,
+        0 0 40px #00ffff;
+}
+
+.retro-button:active {
+    transform: scale(0.95);
+}
+
+/* キャンバスのピクセル描画 */
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* スキャンライン効果 */
+.retro-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.03) 2px,
+        rgba(0, 255, 255, 0.03) 4px
+    );
+    pointer-events: none;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 768px) {
+    .retro-text {
+        font-size: 3rem;
+    }
+    
+    #gameCanvas {
+        width: 240px;
+        height: 480px;
+    }
+    
+    .retro-border {
+        padding: 0.5rem;
+    }
+}
+
+/* CRTモニター効果 */
+@media (min-width: 1024px) {
+    .min-h-screen::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.3) 100%),
+            repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 0, 0.02) 2px,
+                rgba(0, 255, 0, 0.02) 4px
+            );
+        pointer-events: none;
+        z-index: 1000;
+    }
+}
+
+/* ゲームオーバーアニメーション */
+@keyframes game-over-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+#gameOverScreen .retro-border {
+    animation: game-over-pulse 1s ease-in-out infinite;
+}
